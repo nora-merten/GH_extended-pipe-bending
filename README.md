@@ -1,4 +1,3 @@
-
 A ready-to-use Rhino3D Grasshopper definition for AR/MR/XR-assisted (via Fologram) pipe bending using a ram-type bending machine, commonly found in metal workshops.
 
 ![banner](assets/banner.jpg)
@@ -18,7 +17,7 @@ A ready-to-use Rhino3D Grasshopper definition for AR/MR/XR-assisted (via Fologra
 
 ## Dependencies
 
-- Rhino 7
+- Rhino 7 or above
 - [Fologram](https://fologram.com/) for Rhino3D and Grasshopper (install via PackageManager in Rhino)
 - MR-headset with support of Fologram (Hololens 1, Hololens 2, Quest 3) strongly recommended
 
@@ -29,8 +28,8 @@ A ready-to-use Rhino3D Grasshopper definition for AR/MR/XR-assisted (via Fologra
 2. Print XR-marker and fixate visibly on top of the bending machine, so that it is well within your view when operating the bending machine. (Hololens and mobile devices only)
 
 3. Measure bending machine parameters for given pipe diameter and set as constants for the definition.
-	- PinDistance : The Distance between the centrepoints between the two support pins.
-	- PinRadius : The Distance between neutral fibre of the workpiece pipe and the pin centrepoint it rotates around. This is best determined by clamping the pipe (with diameter $d_Pipe$) to the pins by starting a bend and using a caliper to measure the distance $x$ between pipe and pin outsides. To get an accurate measurement, we place one flank of the caliper on the outer quadrant of the pipe and the other on the opposing quadrant of the pin. As the pins commonly feature a concave or cone geometry to accommodate a range of pipe diameters, we need to measure its smallest diameter $d_Pin$. We then calculate the $PinRadius$ parameter for the definition:  $PinRadius = x - \frac{d_Pin - d_Pipe}{2}$
+	- PinDistance : The distance between the centrepoints between the two support pins.
+	- PinRadius : The distance between neutral fibre of the workpiece pipe and the pin centrepoint it rotates around. This is best determined by clamping the pipe (with diameter $d_Pipe$) to the pins by starting a bend and using a caliper to measure the distance $x$ between pipe and pin outsides. To get an accurate measurement, we place one flank of the caliper on the outer quadrant of the pipe and the other on the opposing quadrant of the pin. As the pins commonly feature a concave or cone geometry to accommodate a range of pipe diameters, we need to measure its smallest diameter $d_Pin$. We then calculate the $PinRadius$ parameter for the definition:  $PinRadius = x - \frac{d_Pin - d_Pipe}{2}$
 	- BendRadius : The arc radius for the neutral fibre of the bent pipe piece. This is defined by the arc-die used, but ideally its exact value is validated by a few test bends.
 
 4. Adjust values for offset and base plane rotation until the virtual reference line aligns with the corresponding front edge of the bending machine. (If your bending machine does not feature a front edge parallel to the line spanned by the two pins, find another feature with a known relation to the bending tool and replace the reference line with that instead.)
@@ -39,13 +38,14 @@ A ready-to-use Rhino3D Grasshopper definition for AR/MR/XR-assisted (via Fologra
 
 ![detail](assets/detail.jpg)
 *bending machine parameters*
-## Usage
+
+# Usage
 
 1. Either manually create a bendable pipe geometry centerline curve (polyline with constant arc diameter and minimum distance between bends based on pin distance) or use first cluster to create them automatically from any input curve.
 
 2. Optionally, divide the bendable parts into multiple subparts by either defining a part count, a target segment (bend) count per part or set breakpoints as referenced points.
 
-3. Simulate entire bend sequence for each part. It is recommended to model the environment (at least bending machine and ground) to look for potential collisions. If necessary adjust the part geometry,segmentation or division into subparts accordingly.
+3. Simulate entire bend sequence for each part. It is recommended to model the environment (at least bending machine and ground) to look for potential collisions. If necessary adjust the part geometry, segmentation or division into subparts accordingly.
 
 4. Follow the bend sequence step-by-step:
 	1. Select part by index and select first step.
@@ -76,7 +76,6 @@ A ready-to-use Rhino3D Grasshopper definition for AR/MR/XR-assisted (via Fologra
 - When working with closed headsets without a transparent display (Quest 3), make sure your environment is safe, do not operate heavy machinery and have a surveilling person present.
 
 # How it works
-
 
 For modelling a bent pipe (see Usage, step 1) we neglect flattening at the bend and instead only consider the neutral fibre (or centreline). We assume it to be sufficiently represented by a  polyline with arc-segments between adjacent segments, where the arc radius is determined by the arc-die used in the ram bending machine and the arc angle (and therefore angle between line segments) is the variable result of incremental bending. If we look at the neutral fibre of the pipe before and after the bend, it will feature the same length.
 
